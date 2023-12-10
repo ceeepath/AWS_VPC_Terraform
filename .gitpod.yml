@@ -2,8 +2,8 @@ tasks:
   - name: terraform_installation
     before: |
       sudo sh ./bin/install_terraform.sh
-      sudo sh ./bin/set_terraform_cloud_token.sh
       sudo sh ./bin/set_tf_alias.sh
+      sudo sh ./bin/set_terraform_cloud_token.sh
       cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
             
   - name: aws-cli
