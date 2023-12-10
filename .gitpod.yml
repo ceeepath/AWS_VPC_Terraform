@@ -1,17 +1,17 @@
 tasks:
   - name: terraform_installation
     before: |
-      sudo sh ./bin/install_terraform.sh
-      sudo sh ./bin/set_tf_alias.sh
-      sudo sh ./bin/set_terraform_cloud_token.sh
+      source ./bin/install_terraform.sh
+      source ./bin/set_tf_alias.sh
+      source ./bin/set_terraform_cloud_token.sh
       cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
             
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
     before: |
-      sudo sh ./bin/install_aws_cli.sh
-      sudo sh ./bin/set_tf_alias.sh
+      source ./bin/install_aws_cli.sh
+      source ./bin/set_tf_alias.sh
 
 
 vscode:
