@@ -1,1 +1,1 @@
-This is a template for my repos I'll use to quickly start gitpod with AWS CLI and Terraform
+This project aims to create a resilient infrastructure utilizing AWS services to achieve high availability, fault tolerance, and scalability. The 3-Tier Architecture involves separating components into presentation, application, and data tiers, ensuring efficient resource utilization and improved security.
