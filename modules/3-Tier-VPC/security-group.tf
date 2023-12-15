@@ -148,7 +148,7 @@ resource "aws_security_group" "efs" {
       to_port         = ingress.value.to_port
       protocol        = ingress.value.protocol
       security_groups = ingress.value.security_groups
-      self            = true
+      self            = ingress.value.self
     }
   }
 

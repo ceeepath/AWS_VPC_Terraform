@@ -65,12 +65,14 @@ locals {
       to_port         = 2049
       protocol        = "tcp"
       security_groups = [aws_security_group.web.id]
+      self            = true
     },
     {
       from_port       = 22
       to_port         = 22
       protocol        = "tcp"
       security_groups = [aws_security_group.ssh.id]
+      self            = false
     }
   ]
 
