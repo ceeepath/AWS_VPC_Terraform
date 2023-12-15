@@ -50,6 +50,32 @@ locals {
     }
   ]
 
+  db_ingress_rules = [
+    {
+      from_port       = 3306
+      to_port         = 3306
+      protocol        = "tcp"
+      security_groups = [aws_security_group.web.id]
+    }
+  ]
+
+  efs_ingress_rules = [
+    {
+      from_port       = 2049
+      to_port         = 2049
+      protocol        = "tcp"
+      security_groups = [aws_security_group.web.id]
+      self            = true
+    },
+    {
+      from_port       = 22
+      to_port         = 22
+      protocol        = "tcp"
+      security_groups = [aws_security_group.ssh.id]
+      self            = false
+    }
+  ]
+
   egress_rule = [
     {
       from_port   = 0

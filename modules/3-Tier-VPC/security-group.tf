@@ -98,3 +98,74 @@ resource "aws_security_group" "web" {
 
   depends_on = [aws_security_group.alb, aws_security_group.ssh]
 }
+
+# Create Database Security Group
+resource "aws_security_group" "db" {
+  name        = var.security_groups_details.name.db
+  vpc_id      = aws_vpc.main.id
+  description = var.security_groups_details.name.db
+
+  # Use dynamic block to create ingress rules from the list
+  dynamic "ingress" {
+    for_each = local.db_ingress_rules
+    content {
+      from_port       = ingress.value.from_port
+      to_port         = ingress.value.to_port
+      protocol        = ingress.value.protocol
+      security_groups = ingress.value.security_groups
+    }
+  }
+
+  # Use dynamic block to create egress rule from the object
+  dynamic "egress" {
+    for_each = local.egress_rule
+    content {
+      from_port   = egress.value.from_port
+      to_port     = egress.value.to_port
+      protocol    = egress.value.protocol
+      cidr_blocks = egress.value.cidr_blocks
+    }
+  }
+
+  tags = {
+    Name = var.security_groups_details.name.db
+  }
+
+  depends_on = [aws_security_group.web]
+}
+
+# Create EFS Security Group
+resource "aws_security_group" "efs" {
+  name        = var.security_groups_details.name.efs
+  vpc_id      = aws_vpc.main.id
+  description = var.security_groups_details.name.efs
+
+  # Use dynamic block to create ingress rules from the list
+  dynamic "ingress" {
+    for_each = local.efs_ingress_rules
+    content {
+      from_port       = ingress.value.from_port
+      to_port         = ingress.value.to_port
+      protocol        = ingress.value.protocol
+      security_groups = ingress.value.security_groups
+      self            = ingress.value.self
+    }
+  }
+
+  # Use dynamic block to create egress rule from the object
+  dynamic "egress" {
+    for_each = local.egress_rule
+    content {
+      from_port   = egress.value.from_port
+      to_port     = egress.value.to_port
+      protocol    = egress.value.protocol
+      cidr_blocks = egress.value.cidr_blocks
+    }
+  }
+
+  tags = {
+    Name = var.security_groups_details.name.efs
+  }
+
+  depends_on = [aws_security_group.web, aws_security_group.efs, aws_security_group.ssh]
+}
