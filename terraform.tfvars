@@ -30,6 +30,6 @@ prt_association_configs = {
 }
 
 security_groups_details = {
-  name        = { alb = "App-Load-Balancer-SG", ssh = "SSH-SG", web = "Web-Server-SG", db = "Database-Server-SG", efs = "EFS-SG" }
-  description = { alb = "Application Load Balancer Security Group", ssh = "SSH Security Group", web = "Web Server Security Group", db = "Database Security Group", efs = "EFS Security Group" }
+  name        = { alb = "App-Load-Balancer-SG", ssh = "SSH-SG", web = "Web-Server-SG", db = "Database-Server-SG", efs = "EFS-SG", dummy = "Dummy-Data-Server-SG" }
+  description = { alb = "Application Load Balancer Security Group", ssh = "SSH Security Group", web = "Web Server Security Group", db = "Database Security Group", efs = "EFS Security Group", dummy = "Dummy Data Server Security Group" }
 }

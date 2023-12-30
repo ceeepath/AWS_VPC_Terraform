@@ -59,6 +59,15 @@ locals {
     }
   ]
 
+  dummy_ingress_rules = [
+    {
+      from_port   = 3306
+      to_port     = 3306
+      protocol    = "tcp"
+      cidr_blocks = [var.public_subnet_configs.az1.cidr_block]
+    }
+  ]
+
   # efs_ingress_rules = [
   #   {
   #     from_port       = 2049

@@ -35,7 +35,7 @@ resource "aws_security_group" "alb" {
 resource "aws_security_group" "ssh" {
   name        = var.security_groups_details.name.ssh
   vpc_id      = aws_vpc.main.id
-  description = var.security_groups_details.name.ssh
+  description = var.security_groups_details.description.ssh
 
   # Use dynamic block to create ingress rules from the list
   dynamic "ingress" {
@@ -68,7 +68,7 @@ resource "aws_security_group" "ssh" {
 resource "aws_security_group" "web" {
   name        = var.security_groups_details.name.web
   vpc_id      = aws_vpc.main.id
-  description = var.security_groups_details.name.web
+  description = var.security_groups_details.description.web
 
   # Use dynamic block to create ingress rules from the list
   dynamic "ingress" {
@@ -103,7 +103,7 @@ resource "aws_security_group" "web" {
 resource "aws_security_group" "db" {
   name        = var.security_groups_details.name.db
   vpc_id      = aws_vpc.main.id
-  description = var.security_groups_details.name.db
+  description = var.security_groups_details.description.db
 
   # Use dynamic block to create ingress rules from the list
   dynamic "ingress" {
@@ -134,11 +134,44 @@ resource "aws_security_group" "db" {
   depends_on = [aws_security_group.web]
 }
 
+# Create Dummy Security Group
+resource "aws_security_group" "dummy" {
+  name        = var.security_groups_details.name.dummy
+  vpc_id      = aws_vpc.main.id
+  description = var.security_groups_details.description.dummy
+
+  # Use dynamic block to create ingress rules from the list
+  dynamic "ingress" {
+    for_each = local.dummy_ingress_rules
+    content {
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
+
+  # Use dynamic block to create egress rule from the object
+  dynamic "egress" {
+    for_each = local.egress_rule
+    content {
+      from_port   = egress.value.from_port
+      to_port     = egress.value.to_port
+      protocol    = egress.value.protocol
+      cidr_blocks = egress.value.cidr_blocks
+    }
+  }
+
+  tags = {
+    Name = var.security_groups_details.name.dummy
+  }
+}
+
 # # Create EFS Security Group
 # resource "aws_security_group" "efs" {
 #   name        = var.security_groups_details.name.efs
 #   vpc_id      = aws_vpc.main.id
-#   description = var.security_groups_details.name.efs
+#   description = var.security_groups_details.description.efs
 
 #   # Use dynamic block to create ingress rules from the list
 #   dynamic "ingress" {
