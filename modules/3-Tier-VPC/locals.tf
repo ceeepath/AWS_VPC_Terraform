@@ -20,16 +20,7 @@ locals {
     }
   ]
 
-  ssh_ingress_rules = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
-
-  web_ingress_rules = [
+  ecs_ingress_rules = [
     {
       from_port       = 80
       to_port         = 80
@@ -41,23 +32,47 @@ locals {
       to_port         = 443
       protocol        = "tcp"
       security_groups = [aws_security_group.alb.id]
-    },
-    {
-      from_port       = 22
-      to_port         = 22
-      protocol        = "tcp"
-      security_groups = [aws_security_group.ssh.id]
     }
   ]
 
-  db_ingress_rules = [
-    {
-      from_port       = 3306
-      to_port         = 3306
-      protocol        = "tcp"
-      security_groups = [aws_security_group.web.id]
-    }
-  ]
+  # ssh_ingress_rules = [
+  #   {
+  #     from_port   = 22
+  #     to_port     = 22
+  #     protocol    = "tcp"
+  #     cidr_blocks = ["0.0.0.0/0"]
+  #   }
+  # ]
+
+  # web_ingress_rules = [
+  #   {
+  #     from_port       = 80
+  #     to_port         = 80
+  #     protocol        = "tcp"
+  #     security_groups = [aws_security_group.alb.id]
+  #   },
+  #   {
+  #     from_port       = 443
+  #     to_port         = 443
+  #     protocol        = "tcp"
+  #     security_groups = [aws_security_group.alb.id]
+  #   },
+  #   {
+  #     from_port       = 22
+  #     to_port         = 22
+  #     protocol        = "tcp"
+  #     security_groups = [aws_security_group.ssh.id]
+  #   }
+  # ]
+
+  # db_ingress_rules = [
+  #   {
+  #     from_port       = 3306
+  #     to_port         = 3306
+  #     protocol        = "tcp"
+  #     security_groups = [aws_security_group.web.id]
+  #   }
+  # ]
 
   # efs_ingress_rules = [
   #   {
