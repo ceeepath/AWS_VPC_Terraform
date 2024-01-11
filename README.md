@@ -4,3 +4,4 @@
     - Added Security Group for Database on port 3306 (MySQL/Aurora DB) with source from Webserver Security Group.
     - Added Security Group for Elastic File Storage on port 2049 with source from Webserver Security Group and The EFS Security Group itself. Then on SSH port 22 with source from the SSH Security Group.
 - Project-3 [https://github.com/ceeepath/AWS_VPC_Terraform/tree/5-project-3]: This is a 3-Tier-VPC configuration with same configuration as Project-2 but without the EFS Security Group.
+- Project-4 [https://github.com/ceeepath/AWS_VPC_Terraform/tree/8-project-4]: This is a 3-Tier-VPC configuration with two Security Groups configuration. One for the Application Load Balancer which opens on Ports 80 and 443 from anywhere and the other for the Elastic Container Service which opens on Ports 80 and 443 from the Application Load Balancer Security Group.
